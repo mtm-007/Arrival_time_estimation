@@ -1,0 +1,14 @@
+triggers:
+- description: null
+  envs: []
+  last_enabled_at: 2024-09-25 00:30:54.456210+00:00
+  name: Retrain model daily
+  pipeline_uuid: automatic_retraining
+  schedule_interval: '@once'
+  schedule_type: time
+  settings: null
+  sla: null
+  start_time: 2024-09-25 00:28:00+00:00
+  status: active
+  token: 46f43027b2914f67b7ce3dbcd23dc960
+  variables: {}

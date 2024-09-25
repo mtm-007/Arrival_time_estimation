@@ -1,0 +1,229 @@
+blocks:
+  broken_wildflower:
+    name: broken wildflower
+    type: chart
+    uuid: broken_wildflower
+  distribution_of_performance_metrics:
+    configuration:
+      chart_type: histogram
+      group_by:
+      - rmse_Booster
+      x_axis_label_format: return value.toFixed(3)
+      x_tooltip_label_format: return 2
+      y_tooltip_label_format: 'const [xMin, xMax] = values.values;
+
+        return `${xMin.toFixed(3)} to ${xMax.toFixed(3)}`'
+    data_source:
+      type: chart_code
+    error: null
+    name: Distribution of performance metrics
+    skip_render: false
+    type: chart
+    uuid: distribution_of_performance_metrics
+  distrubution_metrics:
+    configuration:
+      chart_type: histogram
+      group_by:
+      - mse_Booster
+      x_axis_label_format: return value.toFixed(3
+      y_tooltip_label_format: "const [xMin,xMax]= value.values;\nreturn ${xMin.toFixed(3)}\
+        \ to \n${xMin.toFixed(3)}"
+    data_source:
+      type: chart_code
+    error: null
+    name: Distrubution Metrics
+    name_new: Distrubution Metrics
+    skip_render: false
+    type: chart
+    uuid: distrubution_metrics
+  graceful_illusion:
+    name: graceful illusion
+    type: chart
+    uuid: graceful_illusion
+  runs_by_a_model:
+    configuration:
+      chart_style: horizontal
+      chart_type: bar chart
+      group_by:
+      - model
+      metrics:
+      - aggregation: count_distinct
+        column: run_uuid
+      y_sort_order: descending
+    data_source:
+      type: chart_code
+    error: null
+    name: Runs by a model
+    name_new: Runs by a model
+    skip_render: false
+    type: chart
+    uuid: runs_by_a_model
+  runs_by_model__pie_chart_:
+    configuration:
+      chart_type: pie chart
+      group_by:
+      - model
+    data_source:
+      type: chart_code
+    error: null
+    name: Runs by model (Pie chart)
+    skip_render: false
+    type: chart
+    uuid: runs_by_model__pie_chart_
+  runs_by_model_pie_chart_:
+    configuration:
+      chart_type: pie chart
+      group_by:
+      - model
+    data_source:
+      type: chart_code
+    error: null
+    name: Runs by model(PIE Chart)
+    name_new: Runs by model(PIE Chart)
+    skip_render: false
+    type: chart
+    uuid: runs_by_model_pie_chart_
+  time_series__mse_:
+    configuration:
+      chart_type: time series bar chart
+      group_by:
+      - start_time
+      metrics:
+      - aggregation: average
+        column: mse_Booster
+      - aggregation: average
+        column: mse_LinearRegression
+      - aggregation: average
+        column: mse_Lasso
+      time_interval: hour
+      x_axis_label_format: hh
+    data_source:
+      type: chart_code
+    error: null
+    name: Time series (MSE)
+    name_new: Time series (MSE)
+    skip_render: false
+    type: chart
+    uuid: time_series__mse_
+  time_series_mse_:
+    configuration:
+      chart_type: time series bar chart
+      group_by:
+      - start_time
+      metrics:
+      - aggregation: average
+        column: mse_Booster
+      - aggregation: average
+        column: mse_Lasso
+      - aggregation: average
+        column: mse_LinearRegression
+      time_interval: hour
+      x_axis_label_format: hh
+    data_source:
+      type: chart_code
+    error: null
+    name: Time Series(MSE)
+    name_new: Time Series(MSE)
+    skip_render: false
+    type: chart
+    uuid: time_series_mse_
+  training_metrics:
+    configuration:
+      chart_type: time series line chart
+      design:
+        x_grid_lines_hidden: true
+        y_grid_lines_hidden: true
+        y_values_smooth: true
+      group_by:
+      - start_time
+      metrics:
+      - aggregation: average
+        column: mse_Booster
+      - aggregation: average
+        column: rmse_LinearRegression
+      - aggregation: average
+        column: mse_Lasso
+      time_interval: minute
+      x_axis_label_format: h:mn
+      x_grid_lines_hidden: true
+      y_axis_label_format: return value
+      y_grid_lines_hidden: true
+      y_values_smooth: true
+    data_source:
+      type: chart_code
+    error: null
+    name: Training Metrics
+    name_new: Training Metrics
+    skip_render: false
+    type: chart
+    uuid: training_metrics
+  training_metrics__rmse_:
+    configuration:
+      chart_type: time series line chart
+      design:
+        x_grid_lines_hidden: true
+        y_grid_lines_hidden: true
+        y_values_smooth: true
+      group_by:
+      - start_time
+      metrics:
+      - aggregation: average
+        column: rmse_Booster
+      - aggregation: average
+        column: rmse_LinearRegression
+      - aggregation: average
+        column: rmse_Lasso
+      time_interval: minute
+      x_axis_label_format: h:mm
+      x_grid_lines_hidden: true
+      y_axis_label_format: return parseFloat(value).toFixed(3)
+      y_grid_lines_hidden: true
+      y_values_smooth: true
+    data_source:
+      type: chart_code
+    error: null
+    name: Training metrics (RMSE)
+    name_new: Training metrics (RMSE)
+    skip_render: false
+    type: chart
+    uuid: training_metrics__rmse_
+  versatile_bard:
+    name: versatile bard
+    type: chart
+    uuid: versatile_bard
+layout:
+- - block_uuid: training_metrics__rmse_
+    height: 400
+    max_width_percentage: 50
+    width: 2
+  - block_uuid: broken_wildflower
+    width: 1
+  - block_uuid: time_series__mse_
+    height: 400
+    width: 2
+- - block_uuid: distribution_of_performance_metrics
+    max_width_percentage: 0
+    width: 2
+  - block_uuid: runs_by_model__pie_chart_
+    width: 1
+- - block_uuid: graceful_illusion
+    width: 1
+- - block_uuid: versatile_bard
+    width: 1
+- - block_uuid: training_metrics
+    height: 400
+    max_width_percentage: 50
+    width: 2
+  - block_uuid: time_series_mse_
+    height: 400
+    max_width_percentage: 50
+    width: 2
+- - block_uuid: runs_by_a_model
+    height: 400
+    width: 2
+  - block_uuid: distrubution_metrics
+    height: 400
+    max_width_percentage: 0
+    width: 2
+  - block_uuid: runs_by_model_pie_chart_
+    width: 2

@@ -1,0 +1,53 @@
+blocks:
+  shap_value_bar:
+    configuration:
+      chart_type: custom
+    data_source:
+      block_uuid: dashboard_data_source
+      pipeline_schedule_id: null
+      pipeline_uuid: xgboost_training
+      type: block
+    error: null
+    name: Shap value bar
+    name_new: Shap value bar
+    skip_render: false
+    type: chart
+    uuid: shap_value_bar
+  shap_values:
+    configuration:
+      chart_type: custom
+    data_source:
+      block_uuid: dashboard_data_source
+      pipeline_schedule_id: null
+      pipeline_uuid: xgboost_training
+      refresh_interval: '6000'
+      type: block
+    error: null
+    name: SHAP values
+    name_new: SHAP values
+    skip_render: false
+    type: chart
+    uuid: shap_values
+  shap_values_force_plot:
+    configuration:
+      chart_type: custom
+    data_source:
+      block_uuid: dashboard_data_source
+      pipeline_schedule_id: null
+      pipeline_uuid: xgboost_training
+      type: block
+    error: null
+    name: Shap values force plot
+    name_new: Shap values force plot
+    skip_render: false
+    type: chart
+    uuid: shap_values_force_plot
+layout:
+- - block_uuid: shap_value_bar
+    height: 400
+    width: 1
+  - block_uuid: shap_values
+    height: 400
+    width: 1
+- - block_uuid: shap_values_force_plot
+    width: 1
