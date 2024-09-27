@@ -1,5 +1,42 @@
 blocks:
 - all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: unit_3_observability/global_data_products/model.py
+    global_data_product:
+      uuid: xgboost
+  downstream_blocks:
+  - inference
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: model
+  retry_config: null
+  status: executed
+  timeout: null
+  type: global_data_product
+  upstream_blocks: []
+  uuid: model
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: unit_3_observability/markdowns/markdown_notes.md
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: markdown
+  name: markdown_notes
+  retry_config: null
+  status: updated
+  timeout: null
+  type: markdown
+  upstream_blocks: []
+  uuid: markdown_notes
+- all_upstream_blocks_executed: true
   color: teal
   configuration:
     file_source:
@@ -11,10 +48,11 @@ blocks:
   language: python
   name: inference
   retry_config: null
-  status: updated
+  status: executed
   timeout: null
   type: custom
-  upstream_blocks: []
+  upstream_blocks:
+  - model
   uuid: inference
 cache_block_output_in_memory: false
 callbacks: []

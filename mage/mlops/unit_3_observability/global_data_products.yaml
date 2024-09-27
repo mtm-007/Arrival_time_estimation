@@ -11,10 +11,6 @@ training_set:
 xgboost:
   object_type: pipeline
   object_uuid: xgboost_training
-  outdated_after:
-    seconds: 86400
-  outdated_starting_at:
-    hour_of_day: 12
   project: unit_3_observability
   repo_path: /home/src/mlops/unit_3_observability
   settings:

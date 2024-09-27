@@ -1,6 +1,6 @@
 from typing import List, Dict, Tuple, Union  
 
-from sklearn.feature_extration import DictVectorizer 
+from sklearn.feature_extraction import DictVectorizer 
 from xgboost import Booster 
 
 from mlops.utils_n.data_preparation.feature_engineering import combine_features 
@@ -12,15 +12,15 @@ if 'custom' not in globals():
 DEFAULT_INPUTS = [
     {   
         # target = "duration" :11.5
-        'DOLocationID' = 239,
-        'PULocationID' = 236, 
-        'trip_distance' = 1.98, 
+        'DOLocationID': 239,
+        'PULocationID' : 236, 
+        'trip_distance' : 1.98, 
     },
     {   
         # target = "duration"  : 20.8666666667
-        'DOLocationID' = '170',
-        'PULocationID' = '65',
-        'trip_distance'=  6.54,
+        'DOLocationID' : '170',
+        'PULocationID' : '65',
+        'trip_distance':  6.54,
     },
 ] 
 
@@ -50,17 +50,9 @@ def predict(
 
     predictions = model.predict(build_data(vectors))
 
-    for idx, input_features in enumerate(inputs):
+    for idx, input_feature in enumerate(inputs):
         print(f'Prediction of duration using these features: {predictions[idx]}')
         for key, value in inputs[idx].items():
             print(f'\t{key}: {value}')
 
     return predictions.tolist() 
-
-
-
-
-
-
-
-
