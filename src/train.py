@@ -13,6 +13,9 @@ from sklearn.linear_model import Lasso
 from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_squared_error
 
+#parameters 
+model_choice = 'linear_reg'
+out_put_file = f'model_type_{model_choice}.bin'
 
 # ### data summary
 # - There are 68211 total records, after filtering by duration > 1 & <=60 there will be 65924 records, which is 96% of the data
@@ -68,17 +71,11 @@ y_pred = Linear_R.predict(x_val)
 mean_squared_error(y_valid,y_pred, squared=False)
 
 
-#save model with pickle 
+# save model to pickle
 
 with open(f'../models/{out_put_file}', 'wb') as f_out:
     pickle.dump((dv, Linear_R), f_out)
 
-#load model with pickle
-
-with open(f'../models/{out_put_file}', 'rb') as f_in:
-    dv, Linear_R = pickle.load(f_in)
-
-#w Lasso Reg
 
 #With Lasso
 lr = Lasso(alpha=0.01)
