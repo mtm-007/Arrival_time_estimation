@@ -1,5 +1,6 @@
 {
     "PULocationID": 140,
     "DOLocationID": 40,
+    "PU_DO": "140_40",
     "trip_distance": 4.98
 }

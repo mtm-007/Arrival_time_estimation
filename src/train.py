@@ -12,10 +12,11 @@ import pyarrow
 from sklearn.linear_model import Lasso
 from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_squared_error
+from sklearn.metrics import root_mean_squared_error
 
 #parameters 
-model_choice = 'linear_reg'
-out_put_file = f'model_type_{model_choice}.bin'
+model_choice = 'linear_reg_w_PU_DO'
+out_put_file = f'model_{model_choice}.bin'
 
 # ### data summary
 # - There are 68211 total records, after filtering by duration > 1 & <=60 there will be 65924 records, which is 96% of the data
@@ -30,8 +31,8 @@ def read_and_preprocess(filename):
     df['duration'] = df['duration'].apply(lambda td: td.total_seconds()/60)
     df['PU_DO'] = df['PULocationID'].astype(str) + '_' + df['DOLocationID'].astype(str)
     
-    #categorical = ['PU_DO']#'DOLocationID',]
-    categorical = ['PULocationID','DOLocationID']#'DOLocationID',]
+    categorical = ['PU_DO']#'DOLocationID',]
+    #categorical = ['PULocationID','DOLocationID']#'DOLocationID',]
     numerical = ['trip_distance']
     
     df[categorical]= df[categorical].astype(str)
@@ -47,7 +48,7 @@ df_valid = read_and_preprocess('../data/green_tripdata_2023-02.parquet')
 
 dv = DictVectorizer()
 
-categorical = ['PULocationID','DOLocationID']
+categorical = ['PULocationID','DOLocationID', 'PU_DO']
 numerical = ['trip_distance']
 
 train_dict = df_train[categorical + numerical].to_dict(orient='records')
@@ -68,7 +69,8 @@ Linear_R.fit(X_train,y_train)
 #prediction
 y_pred = Linear_R.predict(x_val)
 #evaluation
-mean_squared_error(y_valid,y_pred, squared=False)
+rmse = root_mean_squared_error(y_valid,y_pred)
+print(f'MSE for Linear_reg: {rmse}')
 
 
 # save model to pickle
@@ -83,7 +85,8 @@ lr.fit(X_train,y_train)
 #prediction
 y_pred = lr.predict(x_val)
 #evaluation
-mean_squared_error(y_valid,y_pred, squared=False)
+rmse_lasso= root_mean_squared_error(y_valid,y_pred)
+print(f'MSE for Lasson: {rmse_lasso}')
 
 #With Ridge
 LR = Ridge()
@@ -91,5 +94,6 @@ LR.fit(X_train,y_train)
 #prediction
 y_pred = LR.predict(x_val)
 #evaluation
-mean_squared_error(y_valid,y_pred, squared=False)
+rmse_ridge = root_mean_squared_error(y_valid,y_pred)
+print(f'MSE for Ridge_reg: {rmse_ridge}')
 

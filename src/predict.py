@@ -6,8 +6,8 @@ from flask import request
 from flask import jsonify
 
 #parameters
-model_choice = 'linear_reg'
-out_put_file = f'model_type_{model_choice}.bin'
+model_choice = 'linear_reg_w_PU_DO'
+out_put_file = f'model_{model_choice}.bin'
 
 with open(f'../models/{out_put_file}', 'rb') as f_in:
     dv, Linear_R = pickle.load(f_in)
@@ -19,9 +19,9 @@ def predict():
     inference_input = request.get_json()
 
     X_inf = dv.transform([inference_input])
-    y_pred = Linear_R.predict(X_inf)[0]
+    y_pred = Linear_R.predict(X_inf)
     result  = {
-        "Prediction result": y_pred,
+        "Prediction result": float(y_pred),
     }
     return jsonify(result)
 
