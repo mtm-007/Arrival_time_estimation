@@ -10,3 +10,4 @@ hyperopt
 xgboost
 flask
 gunicorn
+pipenv
