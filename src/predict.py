@@ -16,15 +16,22 @@ with open(f'{out_put_file}', 'rb') as f_in:
 app = Flask('arrival_prediction')
 @app.route('/predict', methods=['POST'])
 
-def predict():
-    inference_input = request.get_json()
+def prepare_features(ride):
+    features = {}
+    features['PU_DO'] = '%s_%s' % (ride['PULocationID'], ride['DOLocationID'])
+    features['trip_distance'] = ride['trip_distance']
+    return features
+
+def predict(inference_input):
+    #inference_input = request.get_json()
 
     X_inf = dv.transform([inference_input])
     y_pred = Linear_R.predict(X_inf)
     result  = {
         "Prediction result": float(y_pred),
     }
-    return jsonify(result)
+    return result[0]
+    #return jsonify(result)
 
 if __name__=='__main__':
     app.run(debug=True, host = '0.0.0.0', port=9696)
