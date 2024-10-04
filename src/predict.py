@@ -9,7 +9,8 @@ from flask import jsonify
 model_choice = 'linear_reg_w_PU_DO'
 out_put_file = f'model_{model_choice}.bin'
 
-with open(f'../models/{out_put_file}', 'rb') as f_in:
+# modified after moving one model pickle file, to suit for docker
+with open(f'{out_put_file}', 'rb') as f_in:
     dv, Linear_R = pickle.load(f_in)
 
 app = Flask('arrival_prediction')
