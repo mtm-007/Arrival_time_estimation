@@ -11,3 +11,4 @@ xgboost
 flask
 gunicorn
 pipenv
+google-cloud-storage
