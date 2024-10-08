@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+numpy = "*"
+flask = "*"
+gunicorn = "*"
+scikit-learn = "==1.5.1"
+mlflow = "*"
+google-cloud = "*"
+google-cloud-storage = "*"
+
+[dev-packages]
+requests = "*"
+
+[requires]
+python_version = "3.12"
