@@ -2,14 +2,11 @@ import pickle,mlflow,os
 from flask import Flask,request, jsonify
 from mlflow import MlflowClient
 
-
-# MLFLOW_TRACKING_URI="http://127.0.0.1:5000"
-# mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-
-RUN_ID = "d4c48152bad344bd9bb991a7e7608484"
+#RUN_ID = "d4c48152bad344bd9bb991a7e7608484"
+RUN_ID = os.getenv('RUN_ID')
+#logged_model = f"gs://mlflow-backend-storage-models/1/{RUN_ID}/artifacts/model"
 logged_model = f"gs://mlflow-backend-storage-models/1/{RUN_ID}/artifacts/model"
 model = mlflow.pyfunc.load_model(logged_model)
-
 
 
 def prepare_features(ride):
@@ -41,4 +38,3 @@ def predict_endpoint():
 
 if __name__=='__main__':
     app.run(debug=True, host = '0.0.0.0', port=9696)
-
