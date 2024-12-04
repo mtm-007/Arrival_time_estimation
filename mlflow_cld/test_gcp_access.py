@@ -132,7 +132,7 @@ class GCSPermissionChecker:
 
 if __name__ == "__main__":
     BUCKET_NAME = "mlflow-backend-storage-models"
-    SA_KEY_PATH = "/home/MERHAWI/arrival_time/Arrival_time_estimation/mlflow_cld/my_gcp_k.json"
+    SA_KEY_PATH = "secret key path"
     
     checker = GCSPermissionChecker(BUCKET_NAME, SA_KEY_PATH)
     if checker.setup_client():

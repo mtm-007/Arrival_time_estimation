@@ -225,6 +225,6 @@ class GCSErrorDiagnostic:
 if __name__ == "__main__":
     diagnostic = GCSErrorDiagnostic(
         bucket_name="mlflow-backend-storage-models",
-        service_account_path="/home/MERHAWI/arrival_time/Arrival_time_estimation/mlflow_cld/my_gcp_k.json"
+        service_account_path="gcp_secret_key_path"
     )
     diagnostic.run_diagnostics()
