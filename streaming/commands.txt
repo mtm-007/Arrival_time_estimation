@@ -1,0 +1,95 @@
+KINESIS_STREAM_INPUT=ride_events
+aws kinesis put-record \
+    --stream-name ${KINESIS_STREAM_INPUT} \
+    --partition-key 1 \
+    --data "hello, this is a kinesis data stream test"
+
+
+aws kinesis put-record \
+    --stream-name ${KINESIS_STREAM_INPUT} \
+    --partition-key 1 \
+    --data '{
+        "ride": {
+            "PULocationID": 210,
+            "DOLocationID": 69,
+            "trip_distance": 9.98
+        },
+        "ride_id": 456
+     }'
+
+KINESIS_STREAM_OUTPUT="ride_predictions"
+SHARD='shardId-000000000000'
+
+SHARD_ITERATOR=$(aws kinesis \
+    get-shard-iterator \
+            --shard-id ${SHARD} \
+            --shard-iterator-type TRIM_HORIZON \
+            --stream-name ${KINESIS_STREAM_OUTPUT} \
+            --query 'ShardIterator' \
+    )
+
+RESULT=$(aws kinesis get-records --shard-iterator $SHARD_ITERATOR)
+echo ${RESULT} | jq -r .'Records[0].Data' | base64 --decode   #or add | jq to format the json
+
+
+#runing test
+
+export PREDICTION_STREAM_NAME="ride_predictions"
+export RUN_ID="d4c48152bad344bd9bb991a7e7608484"
+export TEST_RUN="True"
+
+python test.py
+
+
+docker build -t stream-model-duration:v2 .
+
+docker run -it --rm \
+    -p 8080:8080 \
+    -e PREDICTION_STREAM_NAME="ride_predictions" \
+    -e RUN_ID="d4c48152bad344bd9bb991a7e7608484" \
+    -e TEST_RUN="True" \
+    -e AWS_DEFAULT_REGION="us-west-2" \
+    stream-model-duration:v2
+
+
+docker run -it --rm \
+    -p 8080:8080 \
+    -e PREDICTION_STREAM_NAME="ride_predictions" \
+    -e RUN_ID="d4c48152bad344bd9bb991a7e7608484" \
+    -e TEST_RUN="True" \
+    -e AWS_DEFAULT_REGION="us-west-2" \
+    -e AWS_ACCESS_KEY_ID="...AWS_ACCESS_KEY_ID..s" \
+    -e AWS_SECRET_ACCESS_KEY="...AWS_SECRET_ACCESS_KEY.." \
+    stream-model-duration:v2
+
+url for testing docker with aws lambda function
+http://localhost:8080/2015-03-31/functions/function/invocations
+
+#mlflow backend artifact storage in gcp bucket storage 
+#if mlflow version is upgraded first copy mlflow.db to mflow_backup.db then
+#run  mlflow db upgrade sqlite:///mlflow.db 
+mlflow ui --backend-store-uri=sqlite:///mlflow.db --default-artifact-root=gs://mlflow-backend-storage-models
+
+#to update the package libs pipenv virtual env 
+pipenv --rm
+rm Pipfile.lock
+pipenv install 
+
+#aws ecr 
+aws ecr create-repository --repository-name duration-model
+
+#aws ecr repository_uri
+"869935103158.dkr.ecr.us-west-2.amazonaws.com/duration-model"
+
+#authenticate docker with ecr before pushing docker image to ecr
+$(aws ecr get-login --no-include-email)
+
+REMOTE_URI="869935103158.dkr.ecr.us-west-2.amazonaws.com/duration-model"
+REMOTE_TAG="v2"
+REMOTE_IMAGE=${REMOTE_URI}:${REMOTE_TAG}
+
+LOCAL_IMAGE="stream-model-duration:v2"
+docker tag ${LOCAL_IMAGE} ${REMOTE_IMAGE}
+docker push ${REMOTE_IMAGE}
+
+
