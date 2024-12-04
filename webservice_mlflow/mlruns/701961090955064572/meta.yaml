@@ -1,0 +1,6 @@
+artifact_location: file:///home/MERHAWI/arrival_time/Arrival_time_estimation/webservice_mlflow/mlruns/701961090955064572
+creation_time: 1728427202801
+experiment_id: '701961090955064572'
+last_update_time: 1728427202801
+lifecycle_stage: active
+name: green_taxi_model_new
