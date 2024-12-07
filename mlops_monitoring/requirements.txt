@@ -3,10 +3,11 @@ tqdm
 requests
 pandas
 numpy
-jupyter 
+jupyterlab 
 scikit-learn
 evidently
 pyarrow
 joblib
 psycopg
 psycopg_binary
+matplotlib
