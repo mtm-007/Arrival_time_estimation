@@ -4,6 +4,7 @@ requests
 pandas
 numpy
 jupyterlab 
+jupyterlab-git
 scikit-learn
 evidently
 pyarrow
