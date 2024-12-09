@@ -38,17 +38,11 @@ def calculate_dummy_metrics_with_postgresql(curr):
     value2 = str(uuid.uuid4())
     value3 = rand.random()
 
-    # curr.execute(
-    #     "insert into dummy_metrics(timestamp, value1, value2, value3) values (%s,%s,%s,%s)",
-    #     (datetime.datetime.now(pytz.timezone('America/Los_Angeles')), value1, value2, value3)
-    # )
-    try:
-        curr.execute(
-            "INSERT INTO dummy_metrics(timestamp, value1, value2, value3) VALUES (%s, %s, %s, %s)",
-            (datetime.datetime.now(pytz.timezone('America/Los_Angeles')), value1, value2, value3)
-        )
-    except Exception as e:
-        logging.error(f"Failed to insert data: {e}")
+    curr.execute(
+        "insert into dummy_metrics(timestamp, value1, value2, value3) values (%s,%s,%s,%s)",
+        (datetime.datetime.now(pytz.timezone('America/Los_Angeles')), value1, value2, value3)
+    )
+    
 
 def main():
     preb_db()
