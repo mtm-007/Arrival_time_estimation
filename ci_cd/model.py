@@ -11,12 +11,16 @@ from google.cloud import storage
 #kinesis_client = boto3.client('kinesis') 
 
 def load_model(RUN_ID):
-    BUCKET_NAME = "mlflow-backend-storage-models"
-    logged_model = f"gs://{BUCKET_NAME}/1/{RUN_ID}/artifacts/model"
+    BUCKET_NAME = "mlflow-models-zm-mlops-2"
+    logged_model = f"s3://{BUCKET_NAME}/{RUN_ID}/artifacts/model"
 
     model = mlflow.pyfunc.load_model(logged_model)
     return model
     
+def base64_decode(encoded_data):
+    decoded_data = base64.b64decode(encoded_data).decode('utf-8')
+    ride_event = json.loads(decoded_data)
+    return ride_event
 
 class ModelService():
     def __init__(self,model):
@@ -38,8 +42,8 @@ class ModelService():
 
         for record in event['Records']:
             encoded_data = record['kinesis']['data']
-            decoded_data = base64.b64decode(encoded_data).decode('utf-8')
-            ride_event = json.loads(decoded_data)
+            ride_event= base64_decode(encoded_data)
+            
 
             #print(ride_event)
             ride = ride_event['ride']
