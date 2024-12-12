@@ -41,3 +41,4 @@ aws s3 ls s3://mlflow-models-zm-mlops-2
 mlflow server --backend-store-uri=sqlite:///mlflow.db --default-artifact-root=s3://s3://mlflow-models-zm-mlops-2/
 
 ```
+

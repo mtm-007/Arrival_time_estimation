@@ -8,7 +8,6 @@ from flask import Flask,request, jsonify
 from mlflow import MlflowClient
 from google.cloud import storage
 
-#kinesis_client = boto3.client('kinesis') 
 
 def load_model(RUN_ID):
     BUCKET_NAME = "mlflow-models-zm-mlops-2"
@@ -23,8 +22,10 @@ def base64_decode(encoded_data):
     return ride_event
 
 class ModelService():
-    def __init__(self,model):
+    def __init__(self,model, model_version=None, callbacks=None):
         self.model = model 
+        self.model_version = model_version
+        self.callbacks = callbacks or []
 
     def prepare_features(self, ride):
         features = {}
@@ -44,27 +45,22 @@ class ModelService():
             encoded_data = record['kinesis']['data']
             ride_event= base64_decode(encoded_data)
             
-
-            #print(ride_event)
             ride = ride_event['ride']
             ride_id= ride_event['ride_id']
+
             features = self.prepare_features(ride)
             prediction = self.predict(features)
             prediction_event = {
                 'model' : 'ride_duration_prediction_model',
-                'version': 123,
+                'version': self.model_version,
                 'prediction' : {
                     'ride duration': prediction,
                     'ride_id': ride_id
                 } 
             }
-
-            # if not TEST_RUN:
-            #     kinesis_client.put_record(
-            #         StreamName= PREDICTION_STREAM_NAME,
-            #         Data=json.dumps(prediction_event),
-            #         PartitionKey=str(ride_id)
-            #     )
+            for callback in self.callbacks:
+                callback(prediction_event)
+            
             prediction_events.append(prediction_event)
         
     
@@ -72,8 +68,33 @@ class ModelService():
             "predictions": prediction_events
         }
 
+class KinesisCallback():
+    def __init__(self, kinesis_client, prediction_stream_name):
+        self.kinesis_client = kinesis_client
+        self.predictio_stream_name = prediction_stream_name
+
+    def put_record(self, prediction_event):
+        ride_id = prediction_event['prediction']['ride_id']
+
+        self.kinesis_client.put_record(
+            StreamName= self.prediction_stream_name,
+            Data=json.dumps(prediction_event),
+            PartitionKey=str(ride_id)
+        )
+
 
 def init(prediction_stream_name: str,run_id: str, test_run: bool):
     model = load_model(run_id)
+    
+    callbacks = []
+    if not test_run:
+        kinesis_client = boto3.client('kinesis') 
+        kinesis_callback = KinesisCallback(
+            kinesis_client,
+            prediction_stream_name
+        )
+        callbacks.append(kinesis_callback.put_record)
+
+        
     model_service = ModelService(model)
     return model_service
