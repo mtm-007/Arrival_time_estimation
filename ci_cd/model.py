@@ -6,14 +6,20 @@ import base64
 import pickle,mlflow
 from flask import Flask,request, jsonify
 from mlflow import MlflowClient
-from google.cloud import storage
 
+def get_model_path(RUN_ID):
+    model_location = os.getenv('MODEL_LOCATION')
+
+    if model_location is not None:
+        return model_location
+    
+    BUCKET_NAME = os.getenv( 'BUCKET_NAME',"mlflow-models-zm-mlops-2")
+    model_location = f"s3://{BUCKET_NAME}/{RUN_ID}/artifacts/model"
+    return model_location
 
 def load_model(RUN_ID):
-    BUCKET_NAME = "mlflow-models-zm-mlops-2"
-    logged_model = f"s3://{BUCKET_NAME}/{RUN_ID}/artifacts/model"
-
-    model = mlflow.pyfunc.load_model(logged_model)
+    model_path = get_model_path(RUN_ID)
+    model = mlflow.pyfunc.load_model(model_path)
     return model
     
 def base64_decode(encoded_data):
@@ -71,7 +77,7 @@ class ModelService():
 class KinesisCallback():
     def __init__(self, kinesis_client, prediction_stream_name):
         self.kinesis_client = kinesis_client
-        self.predictio_stream_name = prediction_stream_name
+        self.prediction_stream_name = prediction_stream_name
 
     def put_record(self, prediction_event):
         ride_id = prediction_event['prediction']['ride_id']
@@ -96,5 +102,9 @@ def init(prediction_stream_name: str,run_id: str, test_run: bool):
         callbacks.append(kinesis_callback.put_record)
 
         
-    model_service = ModelService(model)
+    model_service = ModelService(
+        model=model, 
+        model_version=run_id,
+        callbacks=callbacks
+        )
     return model_service

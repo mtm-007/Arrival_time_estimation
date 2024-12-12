@@ -1,3 +1,5 @@
+#unit tests for model.py
+
 import model
 
 def test_base64_decode():
@@ -20,7 +22,6 @@ def test_prepare_features():
     
     model_service =model.ModelService(None)
     ride = {
-
         "DOLocationID": 69,
         "PULocationID": 210,
         "trip_distance": 9.98
@@ -32,7 +33,6 @@ def test_prepare_features():
     }
 
     assert actual_features == expected_features 
-
 
 class ModelMock():
     def __init__(self,value):
@@ -51,7 +51,6 @@ def test_predict():
     }
     actual_predictions = model_service.predict(features)
     expected_prediction = 10.0
-   
 
     assert actual_predictions == expected_prediction
 
@@ -79,6 +78,6 @@ def test_lambda_handler():
             }
         ]
     }
+
+    assert actual_predictions == expected_predictions
    
-
-

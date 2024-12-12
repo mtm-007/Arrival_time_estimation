@@ -17,11 +17,13 @@ docker run -it --rm \
 docker run -it --rm \
     -p 8080:8080 \
     -e PREDICTION_STREAM_NAME="ride_predictions" \
-    -e RUN_ID="39ab5b2ee93a4131b17772294371d0ef" \
+    -e RUN_ID="Test123" \
+    -e MODEL_LOCATION="/app/model" \
     -e TEST_RUN="True" \
     -e AWS_DEFAULT_REGION="us-east-1" \
-    -e AWS_ACCESS_KEY_ID=<.....> \
-    -e AWS_SECRET_ACCESS_KEY=<......> \
+    -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+    -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+    -v $(pwd)/model:/app/model \
     stream-model-duration:v2
 ```
 

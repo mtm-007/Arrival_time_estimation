@@ -7,11 +7,11 @@ name = "pypi"
 boto3 = "*"
 mlflow = "*"
 scikit-learn = "==1.4.2"
-google-cloud = "*"
-google-cloud-storage = "*"
 
 [dev-packages]
 pytest = "*"
+deepdiff = "*"
+moto = "*"
 
 [requires]
 python_version = "3.12"
