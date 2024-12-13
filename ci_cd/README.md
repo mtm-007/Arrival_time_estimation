@@ -44,3 +44,16 @@ mlflow server --backend-store-uri=sqlite:///mlflow.db --default-artifact-root=s3
 
 ```
 
+```bash
+aws --endpoint-url=http://localhost:4566 \
+     kinesis list-streams
+```
+
+```bash
+aws --endpoint-url=http://localhost:4566 \
+     kinesis create-stream \
+     --stream-name ride_predictions \
+     --shard-count 1
+
+```
+

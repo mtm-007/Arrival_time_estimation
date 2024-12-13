@@ -9,9 +9,8 @@ mlflow = "*"
 scikit-learn = "==1.4.2"
 
 [dev-packages]
-pytest = "*"
 deepdiff = "*"
-moto = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.12"

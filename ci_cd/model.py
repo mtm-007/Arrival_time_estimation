@@ -74,6 +74,7 @@ class ModelService():
             "predictions": prediction_events
         }
 
+
 class KinesisCallback():
     def __init__(self, kinesis_client, prediction_stream_name):
         self.kinesis_client = kinesis_client
@@ -88,6 +89,12 @@ class KinesisCallback():
             PartitionKey=str(ride_id)
         )
 
+def create_kinesis_client():
+    end_point_url = os.getenv('KINESIS_ENDPOINT_URL')
+
+    if end_point_url is None:
+        return boto3.client('kinesis')
+    return boto3.client('kinesis',end_point_url=end_point_url )
 
 def init(prediction_stream_name: str,run_id: str, test_run: bool):
     model = load_model(run_id)
