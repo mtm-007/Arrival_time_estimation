@@ -57,3 +57,15 @@ aws --endpoint-url=http://localhost:4566 \
 
 ```
 
+```bash
+SHARD='shardId-000000000000'
+
+aws --endpoint-url=http://localhost:4566 kinesis \
+    get-shard-iterator \
+        --shard-id ${SHARD} \
+        --shard-iterator-type TRIM_HORIZON \
+        --stream-name ${PREDICTION_STREAM_NAME} \
+        --query 'ShardIterator' \
+
+aws --endpoint-url=http://localhost:4566 kinesis get-records --shard-iterator
+```

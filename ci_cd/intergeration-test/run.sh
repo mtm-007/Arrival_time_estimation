@@ -26,8 +26,19 @@ ERROR_CODE=$?
 
 if [ ${ERROR_CODE} != 0 ]; then
     docker-compose logs
+    docker-compose down
+    exit ${ERROR_CODE}
 fi
 
-# docker-compose down
+python test_kinesis.py
 
-# exit ${ERROR_CODE}
+ERROR_CODE=$?
+
+if [ ${ERROR_CODE} != 0 ]; then
+    docker-compose logs
+    docker-compose down
+    exit ${ERROR_CODE}
+fi
+
+docker-compose down
+
