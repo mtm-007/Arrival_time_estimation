@@ -1,0 +1,9 @@
+[tool.pylint."MESSAGES CONTROL"]
+
+disable= [
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "missing-final-newline",
+    "missing-module-docstring"
+]
+

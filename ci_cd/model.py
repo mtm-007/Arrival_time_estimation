@@ -1,24 +1,25 @@
 import json
+import base64
 import os
 import boto3
-import base64
 
-import pickle,mlflow
-from flask import Flask,request, jsonify
-from mlflow import MlflowClient
+import mlflow
 
-def get_model_path(RUN_ID):
+def get_model_path(run_id):
+    """
+        create get_model_path function to locate model location
+    """
     model_location = os.getenv('MODEL_LOCATION')
 
     if model_location is not None:
         return model_location
     
-    BUCKET_NAME = os.getenv( 'BUCKET_NAME',"mlflow-models-zm-mlops-2")
-    model_location = f"s3://{BUCKET_NAME}/{RUN_ID}/artifacts/model"
+    bucket_name = os.getenv( 'BUCKET_NAME',"mlflow-models-zm-mlops-2")
+    model_location = f"s3://{bucket_name}/{run_id}/artifacts/model"
     return model_location
 
-def load_model(RUN_ID):
-    model_path = get_model_path(RUN_ID)
+def load_model(run_id):
+    model_path = get_model_path(run_id)
     model = mlflow.pyfunc.load_model(model_path)
     return model
     
@@ -35,7 +36,7 @@ class ModelService():
 
     def prepare_features(self, ride):
         features = {}
-        features['PU_DO'] = '%s_%s' % (ride['PULocationID'], ride['DOLocationID'])
+        features['PU_DO'] = f"{ride['PULocationID']}_{ride['DOLocationID']}"
         features['trip_distance'] = ride['trip_distance']
         return features
 
@@ -76,6 +77,8 @@ class ModelService():
 
 
 class KinesisCallback():
+    #pylint: disable=too-few-public-methods
+
     def __init__(self, kinesis_client, prediction_stream_name):
         self.kinesis_client = kinesis_client
         self.prediction_stream_name = prediction_stream_name
@@ -107,8 +110,7 @@ def init(prediction_stream_name: str,run_id: str, test_run: bool):
             prediction_stream_name
         )
         callbacks.append(kinesis_callback.put_record)
-
-        
+     
     model_service = ModelService(
         model=model, 
         model_version=run_id,
