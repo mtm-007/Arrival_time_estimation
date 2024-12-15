@@ -1,0 +1,18 @@
+#those are some code i used to check in the command line
+
+aws --endpoint-url=http://localhost:4566 \
+    kinesis delete-stream \
+    --stream-name ${PREDICTION_STREAM_NAME} \
+    --enforce-consumer-deletion || echo "Stream ${PREDICTION_STREAM_NAME} does not exist."
+
+# Wait for deletion to complete
+sleep 2
+
+aws --endpoint-url=http://localhost:4566 \
+    kinesis list-streams
+
+
+aws --endpoint-url=http://localhost:4566 \
+    kinesis create-stream \
+    --stream-name ${PREDICTION_STREAM_NAME} \
+    --shard-count 1 || echo "Failed to create stream ${PREDICTION_STREAM_NAME}."
