@@ -7,3 +7,7 @@ disable= [
     "missing-module-docstring"
 ]
 
+[tool.black]
+line-length=95
+target-version = ['py312']
+skip-string-normalization =  true
