@@ -1,13 +1,18 @@
 [tool.pylint."MESSAGES CONTROL"]
-
+ignore = [".conda"]
 disable= [
     "missing-class-docstring",
     "missing-function-docstring",
     "missing-final-newline",
-    "missing-module-docstring"
+    "missing-module-docstring",
+    "too-few-public-methods"
 ]
 
 [tool.black]
 line-length=95
 target-version = ['py312']
 skip-string-normalization =  true
+
+[tool.isort]
+skip = [".conda"]
+length_sort = true

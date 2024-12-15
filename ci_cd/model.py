@@ -1,8 +1,8 @@
+import os
 import json
 import base64
-import os
-import boto3
 
+import boto3
 import mlflow
 
 
@@ -77,8 +77,6 @@ class ModelService:
 
 
 class KinesisCallback:
-    # pylint: disable=too-few-public-methods
-
     def __init__(self, kinesis_client, prediction_stream_name):
         self.kinesis_client = kinesis_client
         self.prediction_stream_name = prediction_stream_name

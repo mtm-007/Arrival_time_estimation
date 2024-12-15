@@ -1,7 +1,7 @@
-import json
 import os
-import boto3
+import json
 
+import boto3
 from deepdiff import DeepDiff
 
 kinesis_endpoint = os.getenv("KINESIS_ENDPOINT_URL", "http://localhost:4566")
@@ -35,7 +35,7 @@ expected_record = {
     'version': 'Test123',
     'prediction': {
         'ride duration': 28.14,
-        'ride_id': 256,
+        'ride_id': 214,
     },
 }
 

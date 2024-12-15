@@ -16,3 +16,8 @@ aws --endpoint-url=http://localhost:4566 \
     kinesis create-stream \
     --stream-name ${PREDICTION_STREAM_NAME} \
     --shard-count 1 || echo "Failed to create stream ${PREDICTION_STREAM_NAME}."
+
+isort .
+black .
+pylint --recursive=y .
+pytest tests/
