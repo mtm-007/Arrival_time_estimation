@@ -34,8 +34,8 @@ expected_record = {
     'model': 'ride_duration_prediction_model',
     'version': 'Test123',
     'prediction': {
-        'ride duration': 28.14,
-        'ride_id': 214,
+        'ride duration': 28.144,
+        'ride_id': 256,
     },
 }
 

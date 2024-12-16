@@ -11,9 +11,10 @@ scikit-learn = "==1.4.2"
 [dev-packages]
 deepdiff = "*"
 pytest = "*"
-pylint = "*"
 black = "*"
 isort = "*"
+pylint = "==3.2.7"
+pre-commit = "*"
 
 [requires]
 python_version = "3.12"
