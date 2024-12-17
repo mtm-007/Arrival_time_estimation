@@ -69,7 +69,11 @@ aws --endpoint-url=http://localhost:4566 kinesis \
 
 aws --endpoint-url=http://localhost:4566 kinesis get-records --shard-iterator
 ```
+
+To prepare the project, run
+ 
 ```bash
-#linter
-pylint --recursive=y --ignore=.conda .
+make setup
 ```
+
+
