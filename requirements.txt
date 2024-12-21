@@ -14,3 +14,5 @@ pipenv
 awscli
 boto3
 google-cloud-storage
+jupyterlab
+jupyterlab-git
