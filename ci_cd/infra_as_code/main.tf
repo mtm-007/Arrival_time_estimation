@@ -2,7 +2,7 @@ terraform {
     required_version= ">= 1.0"
     backend "s3" {
         bucket = "tf-state-zm-backend-strage"
-        key = "mlops-zm-staging.tfstate"
+        key = "mlops-zm-stg.tfstate"
         region = "us-east-1"
         encrypt = true
     }

@@ -13,7 +13,7 @@ build: quality_checks test
 	docker build -t ${LOCAL_IMAGE_NAME} .
 
 integration_test: build
-	LOCAL_IMAGE_NAME=${LOCAL_IMAGE_NAME} bash intergeration-test/run.sh
+	LOCAL_IMAGE_NAME=${LOCAL_IMAGE_NAME} bash integeration-test/run.sh
 
 publish: build integration_test
 	LOCAL_IMAGE_NAME=${LOCAL_IMAGE_NAME} bash scripts/publish.sh
