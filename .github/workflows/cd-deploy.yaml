@@ -24,11 +24,11 @@ jobs:
       
       #Define the infra
       - name: TF plan
-          id: tf-plan
-          working-directory: 'ci_cd/infra_as_code'
-          run: |
-            terraform init -backend-config="key=mlops-zm-prod.tfstate" -reconfigure && terraform plan -var-file=vars/prod.tfvars 
-      
+        id: tf-plan
+        working-directory: 'ci_cd/infra_as_code'
+        run: |
+          terraform init -backend-config="key=mlops-zm-prod.tfstate" -reconfigure && terraform plan -var-file=vars/prod.tfvars 
+    
       # - name: TF apply
       #   id: tf-apply
       #   working-directory: 'ci_cd/infra_as_code'
