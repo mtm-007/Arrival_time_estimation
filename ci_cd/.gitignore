@@ -53,6 +53,9 @@ coverage.xml
 .pytest_cache/
 cover/
 
+#Terraform 
+**/.terraform/
+
 # Translations
 *.mo
 *.pot
