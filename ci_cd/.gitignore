@@ -53,6 +53,8 @@ coverage.xml
 .pytest_cache/
 cover/
 
+#ipython_checkpoits
+**/.ipynb_checkpoints/
 
 #terraform
 **/.terraform/
