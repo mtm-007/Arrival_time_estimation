@@ -16,5 +16,6 @@ isort = "*"
 pylint = "==3.2.7"
 pre-commit = "*"
 
+
 [requires]
 python_version = "3.12"

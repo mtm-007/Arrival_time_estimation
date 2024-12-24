@@ -53,9 +53,12 @@ coverage.xml
 .pytest_cache/
 cover/
 
+#ipython_checkpoits
+**/.ipynb_checkpoints/
 
 #terraform
 **/.terraform/
+>>>>>>> 8591a520c95e2efd12f1c5fda79ba43246fb44c5
 # Translations
 *.mo
 *.pot
